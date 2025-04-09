@@ -1,64 +1,81 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 
 const Carousel = () => {
-  const slides = [
-    {
-      title: "हुनर से पैसे कमाएँ। ",
-      description:
-        "अपने खाना बनाने की प्रतिभा को एक नई शुरुआत दें और इसके माध्यम से पैसे कमाएँ।",
-      bgImage:
-        "https://thechefkart.com/_next/image?url=https%3A%2F%2Fchefkart-strapi-media.s3.ap-south-1.amazonaws.com%2FJoin_as_chef_hero_banner_01_f31e87e92e.webp&w=1920&q=75",
-    },
-    {
-      title: "समाज का नज़रिया बदलें ",
-      description:
-        "देश में कुक की परिभाषा और उनके लिए दृष्टिकोण बदलने में हमारी मदद करें।",
-      bgImage:
-        "https://thechefkart.com/_next/image?url=https%3A%2F%2Fchefkart-strapi-media.s3.ap-south-1.amazonaws.com%2FJoin_as_chef_hero_banner_03_e679e84c56.webp&w=1920&q=75",
-    },
-    {
-      title: "ChefKart का हिस्सा बनें ",
-      description:
-        "हमसे जुड़े 4500 से भी ज़्यादा कुक्स का हिस्सा बनें और अपने कौशल को आगे बढ़ाएँ।",
-      bgImage:
-        "https://thechefkart.com/_next/image?url=https%3A%2F%2Fchefkart-strapi-media.s3.ap-south-1.amazonaws.com%2FJoin_as_chef_hero_banner_02_6c8df4e377.webp&w=1920&q=75",
-    },
- 
-  ];
-
+  const [slides, setSlides] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const carouselRef = useRef(null);
 
-  // Auto slide effect
+  // Fetch slides from API
+  useEffect(() => {
+    const fetchSlides = async () => {
+      try {
+        const res = await axios.get("http://localhost:8000/crousel/get");
+        const formattedSlides = res.data.map((item) => ({
+          title: item.title || "",
+          description: item.content || "",
+          bgImage: item.image || "",
+          action: item.action || "",
+        }));
+        setSlides(formattedSlides);
+      } catch (error) {
+        console.error("Failed to fetch carousel data:", error);
+      }
+    };
+
+    fetchSlides();
+  }, []);
+
+  // Auto-slide
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 3000); // Change slide every 3 seconds
+      setCurrentSlide((prev) => (slides.length ? (prev + 1) % slides.length : 0));
+    }, 5000);
 
-    return () => clearInterval(interval); // Cleanup on component unmount
-  }, [slides.length]);
+    return () => clearInterval(interval);
+  }, [slides]);
+
+  // Scroll to active slide
+  useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollTo({
+        left: carouselRef.current.offsetWidth * currentSlide,
+        behavior: "smooth",
+      });
+    }
+  }, [currentSlide]);
+
+  if (!slides.length) {
+    return <div className="text-center mt-10">Loading slides...</div>;
+  }
 
   return (
-    <div className="relative w-full h-screen">
-      {/* Slide */}
+    <div className="relative w-[100vw] h-[80vh] overflow-hidden">
       <div
-        className="w-full h-full flex items-center text-white bg-cover bg-center transition-all duration-500"
-        style={{
-          backgroundImage: `url(${slides[currentSlide].bgImage})`,
-        }}
+        ref={carouselRef}
+        className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory h-full"
       >
-        {/* Text Section */}
-        <div className="w-full md:w-1/2 p-10 md:p-16 rounded-r-lg ml-4">
-          <h2 className="text-2xl md:text-4xl font-bold mt-3">
-            {slides[currentSlide].title}
-          </h2>
-          <p className="text-base md:text-xl mt-4">
-            {slides[currentSlide].description}
-          </p>
-
-          <button className="bg-orange-500 text-white font-bold text-lg md:text-xl px-8 py-4 rounded-md mt-5 shadow-lg hover:bg-orange-600 hover:shadow-xl transition-all duration-300">
-            ChefKart से जुड़ें
-          </button>
-        </div>
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className="w-full flex-shrink-0 h-full snap-start bg-cover bg-center flex items-center"
+            style={{
+              backgroundImage: `url(${slide.bgImage})`,
+            }}
+          >
+            <div className="bg-black/50 w-full h-full flex items-center p-6 md:p-16">
+              <div className="w-full md:w-1/2 text-white">
+                <h2 className="text-2xl md:text-4xl font-bold mt-3">
+                  {slide.title}
+                </h2>
+                <p className="text-base md:text-xl mt-4">{slide.description}</p>
+                <button className="bg-orange-500 text-white font-bold text-lg md:text-xl px-6 py-3 rounded-md mt-5 shadow-lg hover:bg-orange-600 hover:shadow-xl transition-all duration-300">
+                  {slide.action || "ChefKart से जुड़ें"}
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Indicators */}
@@ -68,7 +85,7 @@ const Carousel = () => {
             key={index}
             onClick={() => setCurrentSlide(index)}
             className={`h-3 w-3 rounded-full ${
-              currentSlide === index ? "bg-gray-800" : "bg-gray-400"
+              currentSlide === index ? "bg-white" : "bg-gray-400"
             }`}
           ></button>
         ))}
