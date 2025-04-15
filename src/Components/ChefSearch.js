@@ -1,141 +1,57 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const ChefDirectory = () => {
-  const chefs = [
-    {
-      name: "Mr. Shankar Prasad",
-      rating: 4.8,
-      reviews: 586,
-      city: "Gurgaon",
-      area: "Sector 56",
-      locality: "HUDA CGHS Housing",
-      experience: 7,
-      phone: "+91-95XXXXXXX",
-      img: "path-to-image1",
-    },
-    {
-      name: "Mr. Navin Singh Samant",
-      rating: 4.4,
-      reviews: 479,
-      city: "Gurgaon",
-      area: "Sector 50",
-      locality: "Nirvana Country",
-      experience: 14,
-      phone: "+91-93XXXXXXX",
-      img: "path-to-image2",
-    },
-    {
-      name: "Mr. Shatrughan",
-      rating: 4.8,
-      reviews: 416,
-      city: "Gurgaon",
-      area: "Sector 65",
-      locality: "M3M Golfestate Fairway East",
-      experience: 7,
-      phone: "+91-98XXXXXXX",
-      img: "path-to-image3",
-    },
-    {
-      name: "Mr. Rakesh Kumar",
-      rating: 4.7,
-      reviews: 320,
-      city: "Delhi",
-      area: "South Delhi",
-      locality: "Green Park",
-      experience: 10,
-      phone: "+91-99XXXXXXX",
-      img: "path-to-image4",
-    },
-    {
-      name: "Mr. Suresh Chand",
-      rating: 4.5,
-      reviews: 200,
-      city: "Mumbai",
-      area: "Bandra West",
-      locality: "Pali Hill",
-      experience: 12,
-      phone: "+91-97XXXXXXX",
-      img: "path-to-image5",
-    },
-    {
-      name: "Ms. Anita Joshi",
-      rating: 4.6,
-      reviews: 450,
-      city: "Pune",
-      area: "Koregaon Park",
-      locality: "North Main Road",
-      experience: 8,
-      phone: "+91-96XXXXXXX",
-      img: "path-to-image6",
-    },
-    {
-      name: "Mr. Rajiv Malhotra",
-      rating: 4.9,
-      reviews: 600,
-      city: "Chennai",
-      area: "Adyar",
-      locality: "Gandhi Nagar",
-      experience: 15,
-      phone: "+91-98XXXXXXX",
-      img: "path-to-image7",
-    },
-    {
-      name: "Ms. Sunita Verma",
-      rating: 4.3,
-      reviews: 300,
-      city: "Hyderabad",
-      area: "Gachibowli",
-      locality: "Financial District",
-      experience: 11,
-      phone: "+91-94XXXXXXX",
-      img: "path-to-image8",
-    },
-    {
-      name: "Mr. Kunal Shah",
-      rating: 4.2,
-      reviews: 150,
-      city: "Ahmedabad",
-      area: "Navrangpura",
-      locality: "CG Road",
-      experience: 9,
-      phone: "+91-92XXXXXXX",
-      img: "path-to-image9",
-    },
-    {
-      name: "Ms. Priya Nair",
-      rating: 4.4,
-      reviews: 420,
-      city: "Bangalore",
-      area: "Whitefield",
-      locality: "ITPL Main Road",
-      experience: 13,
-      phone: "+91-91XXXXXXX",
-      img: "path-to-image10",
-    },
-  ];
+  //handle the api calls and data fetching for the chef directory
+  //useState to manage the state of chefs and search filters
+  const [chefs, setChefs] = useState([]);
 
+  //search  filter of chef
   const [search, setSearch] = useState("");
+  //useNavigate is used to navigate to different routes
+   const navigate = useNavigate();
+
   const [filters, setFilters] = useState({
     city: "",
     area: "",
     locality: "",
   });
 
+  useEffect(() => {
+    const fetchChefs = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/chef/get");
+        if (response.data && response.data.data) {
+
+          setChefs(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching chefs:", error);
+      }
+    };
+
+    fetchChefs();
+  }, []);
+// filter the chefs based on the search input and selected filters
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value }));
   };
 
+  
   const filteredChefs = chefs.filter((chef) => {
     const matchesGlobalSearch =
       chef.name.toLowerCase().includes(search.toLowerCase()) ||
       chef.phone.includes(search);
     const matchesCity =
-      filters.city === "" || chef.city.toLowerCase().includes(filters.city.toLowerCase());
+      filters.city === "" ||
+      chef.city?.toLowerCase().includes(filters.city.toLowerCase());
     const matchesArea =
-      filters.area === "" || chef.area.toLowerCase().includes(filters.area.toLowerCase());
+      filters.area === "" ||
+      chef.area?.toLowerCase().includes(filters.area.toLowerCase());
     const matchesLocality =
-      filters.locality === "" || chef.locality.toLowerCase().includes(filters.locality.toLowerCase());
+      filters.locality === "" ||
+      chef.Address?.toLowerCase().includes(filters.locality.toLowerCase());
 
     return matchesGlobalSearch && matchesCity && matchesArea && matchesLocality;
   });
@@ -177,19 +93,18 @@ const ChefDirectory = () => {
         />
       </div>
 
-      {/* Chefs List */}.
-      <h1>Trending cooks</h1>
+      {/* Chefs List */}
+      <h1 className="text-xl font-bold mb-4">Trending cooks</h1>
       <div className="grid grid-cols-1 mt-5 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      
-        
         {filteredChefs.map((chef, index) => (
           <div
             key={index}
+            onClick={() => navigate(`/chef/${chef._id}`)}
             className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition"
-          > 
-              <div className="flex items-center space-x-4">
+          >
+            <div className="flex items-center space-x-4">
               <img
-                src={chef.img}
+                src={chef.profilepic || "https://via.placeholder.com/64"}
                 alt={chef.name}
                 className="w-16 h-16 rounded-full object-cover"
               />
@@ -201,9 +116,13 @@ const ChefDirectory = () => {
               </div>
             </div>
             <div className="mt-4">
-              <p className="text-sm">⭐ {chef.rating} ({chef.reviews} Ratings)</p>
+              <p className="text-sm">
+                ⭐ {chef.starRating || "0"} ({chef.totalRatings || "0"} Ratings)
+              </p>
               <p className="text-sm">📞 {chef.phone}</p>
-              <p className="text-sm">Experience: {chef.experience} years</p>
+              <p className="text-sm">
+                Experience: {chef.experience || "N/A"}
+              </p>
             </div>
           </div>
         ))}

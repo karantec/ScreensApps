@@ -73,6 +73,11 @@ const Navbar = () => {
             Contact Us
           </button>
           </Link>
+          <Link to="/register-chef">
+          <button className="text-white text-2xl  py-2 px-6 rounded-lg ">
+            Registration as the chef
+          </button>
+          </Link>
         </nav>
 
         {/* Hamburger Menu Button */}
@@ -146,6 +151,7 @@ const Navbar = () => {
               Contact Us
               <FaChevronRight className="ml-1" />
             </button>
+          
           </div>
         </div>
       )}
