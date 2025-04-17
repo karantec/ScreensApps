@@ -1,49 +1,160 @@
-function Feature({ p, h1, company, details, student, img }) {
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+const Investors = () => {
+  const [investors, setInvestors] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get("http://localhost:8000/investor/getinvestor")
+      .then((res) => {
+        setInvestors(res.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching investor data:", err);
+        setError("Failed to load investor data");
+        setIsLoading(false);
+      });
+  }, []);
+
+  // Set up auto-scroll
+  useEffect(() => {
+    if (investors.length === 0) return;
+    
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => 
+        prevIndex === investors.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [investors.length]);
+
+  const goToNext = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === investors.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const goToPrev = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? investors.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64 w-full">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center text-red-500 py-8 w-full">
+        <p>{error}</p>
+      </div>
+    );
+  }
+
+  if (investors.length === 0) {
+    return (
+      <div className="bg-gray-50 py-16 w-full">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Our Investors</h2>
+          <p className="text-center text-gray-500">No investors found.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <>
-      <div >
-      <section className="mx-auto mb-2 max-w-screen-lg px-5 py-10 md:py-24">
-        <section className="text-gray-600 body-font">
-          <h1 className="text-center font-bold text-gray-700 font-sans text-4xl mb-8 uppercase top-perfor">Our Investors</h1>
-          <div className={`flex flex-col md:flex-row items-center justify-center gap-[7rem] border-2 border-gray-300 rounded-lg shadow-md  p-6 pic_gap`}>
-            <div className="md:w-1/2 flex flex-col items-center md:items-start text-center ">
-              <span className="text-3xl text-red-600 font-sans font-bold mb-4">
-                {p}
-              </span>
-              <h1 className="title-font mt-2 md:mt-0 sm:text-4xl lg:text-2xl mb-4 font-bold text-gray-900 text-center md:text-left">
-                {h1}
-              </h1>
-              <p className="mb-4 leading-relaxed text-black text-center md:text-left">
-                {details}
-              </p>
-              <div className="flex gap-10 mt-3 justify-center md:justify-start">
-                <h1 className="text-xl text-black rounded-md p-3 font-bold">
-                  {student}
-                </h1>
-                <img src={company} 
-                width={160}
-                alt="img" 
-                height={70} 
-                className="text-xl text-white  rounded-md p-3 font-bold flex items-center justify-center">
-              
-                </img>
-              </div>
-              
-            </div>
-            <div className="md:w-1/2 mt-3 flex justify-center items-center  md:justify-center">
-              <img
-                className="object-cover object-center rounded-lg  "
-                width={400} height={400}
-                alt="hero"
-                src={img}
-              />
+    <div className="bg-gray-50 py-16 w-full">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Our Investors</h2>
+        
+        <div className="relative w-full">
+          {/* Main Carousel */}
+          <div className="w-full overflow-hidden">
+            <div 
+              className="flex transition-transform duration-500 ease-in-out w-full" 
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
+              {investors.map((item, index) => (
+                <div key={index} className="w-full flex-shrink-0">
+                  <div className="mx-auto max-w-lg">
+                    <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col h-full">
+                      <div className="w-full h-48 bg-gray-100 flex items-center justify-center p-4">
+                        {item.image ? (
+                          <img 
+                            src={item.image} 
+                            alt={item.title} 
+                            className="max-h-full max-w-full object-contain"
+                          />
+                        ) : (
+                          <div className="flex items-center justify-center h-full w-full bg-gray-200">
+                            <span className="text-gray-400">No image available</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-6 flex-grow">
+                        <h3 className="font-bold text-xl mb-2 text-gray-800">{item.title}</h3>
+                        <p className="text-blue-600 font-medium mb-3">{item.subtitle}</p>
+                        <p className="text-gray-600">{item.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        </section>
-      </section>
+          
+          {/* Navigation Arrows */}
+          <button 
+            onClick={goToPrev}
+            className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-2 shadow-md hover:bg-opacity-100 focus:outline-none"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          
+          <button 
+            onClick={goToNext}
+            className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-2 shadow-md hover:bg-opacity-100 focus:outline-none"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+          
+          {/* Dots Indicator */}
+          <div className="flex justify-center mt-6">
+            {investors.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`mx-1 h-3 w-3 rounded-full focus:outline-none ${
+                  index === currentIndex ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
-}
+};
 
-export default Feature;
+export default Investors;

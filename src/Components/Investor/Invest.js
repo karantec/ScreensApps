@@ -5,7 +5,8 @@ import PressReleases from './PresRelease'
 import MissionSection from './Mission'
 import Carousel2 from './Slider2'
 
-import RecPage1 from './Recent copy/page'
+
+import Investors from './Recent copy/components/Feature'
 
 const Invest = () => {
   return (
@@ -14,7 +15,7 @@ const Invest = () => {
         <MissionSection/>
        
         <PressReleases/>
-        <RecPage1/>
+        < Investors/>
         <SignupSection/>
         <AnnouncementBanner/>
     </div>
