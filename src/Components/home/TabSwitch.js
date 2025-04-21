@@ -1,82 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const TabSwitchComponent = () => {
-  const [activeTab, setActiveTab] = useState("singles");
+  const [activeTab, setActiveTab] = useState("For Singles");
+  const [data, setData] = useState([]);
 
-  const singlesContent = (
-    <div className="flex flex-col lg:flex-row items-center gap-10">
-      {/* Image Section */}
-      <div className="w-full lg:w-1/2 flex justify-center">
-        <img
-          src="https://thechefkart.com/_next/image?url=https%3A%2F%2Fchefkart-strapi-media.s3.ap-south-1.amazonaws.com%2FSingles_5497580168.webp&w=1920&q=75" // Replace with the actual image path
-          alt="For Singles"
-          className="rounded-lg shadow-md"
-        />
-      </div>
-      {/* Text Section */}
-      <div className="w-full lg:w-1/2 text-center lg:text-left">
-        <h2 className="text-3xl font-bold mb-4">No more missing Ghar Ka Khana!</h2>
-        <p className="text-gray-600 text-lg">
-          Let our cooks bring memories of home to your plate.
-        </p>
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    const fetchHomeData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/home/getall");
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching home content:", error);
+      }
+    };
 
-  const familiesContent = (
-    <div className="flex flex-col lg:flex-row items-center gap-10">
-        
-      {/* Image Section */}
-      <div className="w-full lg:w-1/2 flex justify-center">
-        <img
-          src="https://thechefkart.com/_next/image?url=https%3A%2F%2Fchefkart-strapi-media.s3.ap-south-1.amazonaws.com%2FFamily_f0c0d80b42.webp&w=1920&q=75" // Replace with the actual image path
-          alt="For Families"
-          className="rounded-lg shadow-md"
-        />
-      </div>
-      {/* Text Section */}
-      <div className="w-full lg:w-1/2 text-center lg:text-left">
-        <h2 className="text-3xl font-bold mb-4">Food catered to every family member!
-        !</h2>
-        <p className="text-gray-600 text-lg">
-        Spend time with your loved ones as our best cooks take care of the cooking.
-        </p>
-      </div>
-    </div>
-  );
+    fetchHomeData();
+  }, []);
+
+  const filteredData = data.find((item) => item.category === activeTab);
 
   return (
     <section className="bg-gray-50 py-16">
       <div className="container mx-auto px-5">
-        {/* Tab Navigation */}
-        <h1 className="text-5xl  text-black font-bold text-center">Healthy food cooked in your kitchen, <br/>whenever you want!</h1>
+        {/* Heading */}
+        <h1 className="text-5xl text-black font-bold text-center">
+          Healthy food cooked in your kitchen, <br /> whenever you want!
+        </h1>
+
+        {/* Tabs */}
         <div className="flex justify-center mb-8 mt-5">
           <button
             className={`px-6 py-3 text-lg font-semibold ${
-              activeTab === "singles"
+              activeTab === "For Singles"
                 ? "text-orange-600 border-b-4 border-orange-600"
                 : "text-gray-500"
             }`}
-            onClick={() => setActiveTab("singles")}
+            onClick={() => setActiveTab("For Singles")}
           >
             For Singles
           </button>
           <button
             className={`px-6 py-3 text-lg font-semibold ${
-              activeTab === "families"
+              activeTab === "For Families"
                 ? "text-orange-600 border-b-4 border-orange-600"
                 : "text-gray-500"
             }`}
-            onClick={() => setActiveTab("families")}
+            onClick={() => setActiveTab("For Families")}
           >
             For Families
           </button>
         </div>
 
-        {/* Content Section */}
-        <div>
-          {activeTab === "singles" ? singlesContent : familiesContent}
-        </div>
+        {/* Content */}
+        {filteredData && (
+          <div className="flex flex-col lg:flex-row items-center gap-10">
+            {/* Image */}
+            <div className="w-full lg:w-1/2 flex justify-center">
+              <img
+                src={filteredData.image}
+                alt={filteredData.title}
+                className="rounded-lg shadow-md"
+              />
+            </div>
+            {/* Text */}
+            <div className="w-full lg:w-1/2 text-center lg:text-left">
+              <h2 className="text-3xl font-bold mb-4">{filteredData.title}</h2>
+              <p className="text-gray-600 text-lg">{filteredData.content}</p>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

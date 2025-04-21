@@ -1,57 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
+import axios from "axios";
 
 const GalleryWithState = () => {
-  // State to manage the zoomed image
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomedIndex, setZoomedIndex] = useState(0);
+  const [images, setImages] = useState([]);
 
-  const images = [
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_25_6ed7e4df8e.png",
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_24_9f0f37936a.png",
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_22_6032e4cfba.png",
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_10_5ddf0b07ef.png",
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_09_40fd87e1bd.png",
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_21_c77b00e93e.png",
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_20_fb2b9b8032.png",
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_18_db483bd088.png",
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_17_c2beda679c.png",
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_16_1c53d90992.png",
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_15_0e982c7e24.png",
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_14_2f200a48bb.png",
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_13_1635e91993.png",
-    "https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/rezize_3by2_12_bf6aa54e87.png",
-  ];
+  // Fetch images from API on mount
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/foodGall/getall");
+        setImages(response.data); // Store API image data
+      } catch (error) {
+        console.error("Failed to fetch gallery images:", error);
+      }
+    };
+
+    fetchImages();
+  }, []);
 
   const settings = {
-    slidesToShow: 3, // Show 3 images at once
-    slidesToScroll: 1, // Scroll one image at a time
-    draggable: true, // Enable mouse dragging
-    centerMode: true, // Centers the active image
-    focusOnSelect: true, // Makes image clickable to zoom
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    draggable: true,
+    centerMode: true,
+    focusOnSelect: true,
     responsive: [
       {
-        breakpoint: 1024, // Tablet
-        settings: {
-          slidesToShow: 2, // Show 2 images at once
-        },
+        breakpoint: 1024,
+        settings: { slidesToShow: 2 },
       },
       {
-        breakpoint: 768, // Mobile
-        settings: {
-          slidesToShow: 1, // Show 1 image at a time
-        },
+        breakpoint: 768,
+        settings: { slidesToShow: 1 },
       },
     ],
   };
 
-  // Handle Zoom
   const handleZoom = (index) => {
     setZoomedIndex(index);
     setIsZoomed(true);
   };
 
-  // Handle Zoom Navigation
   const handleNextZoom = () => {
     setZoomedIndex((prev) => (prev + 1) % images.length);
   };
@@ -67,13 +59,10 @@ const GalleryWithState = () => {
 
         {/* Image Slider */}
         <Slider {...settings}>
-          {images.map((image, index) => (
-            <div
-              key={index}
-              className="px-8" // Add padding to create spacing between slides
-            >
+          {images.map((img, index) => (
+            <div key={img._id} className="px-8">
               <img
-                src={image}
+                src={img.image}
                 alt={`Slide ${index}`}
                 className="w-full h-64 rounded-md object-cover cursor-pointer"
                 onClick={() => handleZoom(index)}
@@ -82,10 +71,9 @@ const GalleryWithState = () => {
           ))}
         </Slider>
 
-        {/* Zoomed Image Modal */}
+        {/* Zoomed Modal */}
         {isZoomed && (
           <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
-            {/* Close Button */}
             <button
               className="absolute top-5 right-5 bg-white text-black px-4 py-2 rounded-lg"
               onClick={() => setIsZoomed(false)}
@@ -93,7 +81,6 @@ const GalleryWithState = () => {
               Close
             </button>
 
-            {/* Previous Button */}
             <button
               className="absolute left-5 top-1/2 transform -translate-y-1/2 bg-white text-black px-4 py-2 rounded-lg"
               onClick={handlePrevZoom}
@@ -101,17 +88,14 @@ const GalleryWithState = () => {
               Prev
             </button>
 
-            {/* Zoomed Image */}
             <div className="relative w-full sm:w-2/3 lg:w-1/2 max-h-1/2 flex justify-center items-center">
               <img
-                src={images[zoomedIndex]}
-                width="500px"
+                src={images[zoomedIndex]?.image}
                 alt={`Zoomed ${zoomedIndex}`}
                 className="w-full h-auto rounded-lg"
               />
             </div>
 
-            {/* Next Button */}
             <button
               className="absolute right-5 top-1/2 transform -translate-y-1/2 bg-white text-black px-4 py-2 rounded-lg"
               onClick={handleNextZoom}
