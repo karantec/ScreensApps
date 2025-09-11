@@ -1,116 +1,272 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div>
-        <footer class="text-gray-600 body-font">
-  <div class="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
-    <div class="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
-      <Link to="#" class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-        <img src="https://thechefkart.com/_next/image?url=https%3A%2F%2Fchefkart-strapi-media.s3.ap-south-1.amazonaws.com%2FLogo_black_9e78b44631.webp&w=1920&q=75"></img>
-        
-      </Link>
-      <p class="mt-2 text-black font-bold  text-center ">Get The App Now</p>
-   <div className="flex flex-row space-x-7 mt-5">
-    <img src="https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/app_store_e12d7f52d9.svg" alt="app"/>
-    <img src="https://chefkart-strapi-media.s3.ap-south-1.amazonaws.com/google_play_bb87168764.svg" alt="app"/>   
-   </div>
+    <footer className="bg-white border-t border-gray-200">
+      {/* Popular Searches Section */}
+      <div className="px-6 py-8 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <h3 className="text-lg font-bold mb-4 text-red-700">
+            Popular Searches
+          </h3>
 
-    </div>
-    <div class="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
-      <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-        <h2 class="title-font font-bold  text-gray-900 tracking-widest text-md mb-3">CATEGORIES</h2>
-        <nav class="list-none mb-10">
-          <li>
-            <Link to="#" class="text-gray-600 normal leading-loose hover:text-gray-800">
-            Cook for a Month</Link>
-          </li>
-          <li>
-            <Link to="#" class="text-gray-600 normal leading-loose hover:text-gray-800">Blog</Link>
-          </li>
-          <li>
-            <Link to="#" class="text-gray-600 normal leading-loose hover:text-gray-800">About us</Link>
-          </li>
-         
-        </nav>
-      </div>
-      <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-        <h2 class="title-font font-bold text-gray-900 tracking-widest text-md mb-3">CATEGORIES</h2>
-        <nav class="list-none mb-10">
-          <li>
-            <Link to="#" class="text-gray-600 normal leading-loose hover:text-gray-800">Chefit: One-Time Cook
-            </Link>
-          </li>
-          <li>
-            <Link to="#" class="text-gray-600 normal leading-loose hover:text-gray-800">ChefKart से जुड़ें</Link>
-          </li>
-          <li>
-            <Link to="#" class="text-gray-600 normal leading-loose hover:text-gray-800">Cooks Near me</Link>
-          </li>
-        
-        </nav>
-      </div>
-      <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-        <h2 class="title-font font-bold text-gray-900 tracking-widest text-md mb-3">CATEGORIES</h2>
-        <nav class="list-none mb-10">
-          <li>
-            <Link to="#" class="text-gray-600 normal leading-loose hover:text-gray-800">Chef for Party</Link>
-          </li>
-          <li>
-            <Link to="#" class="text-gray-600 normal leading-loose hover:text-gray-800">Contact</Link>
-          </li>
-          
-        </nav>
-      </div>
-      <div class="lg:w-1/4 md:w-1/2 w-full px-4">
-        <h2 class="title-font  text-gray-900 tracking-widest font-bold text-md mb-3">CATEGORIES</h2>
-        <nav class="list-none mb-10">
-          <li>
-            <Link to="#" class="text-gray-600 normal leading-loose hover:text-gray-800">Privacy Policy</Link>
-          </li>
-          <li>
-            <Link to="#" class="text-gray-600 normal leading-loose hover:text-gray-800">Terms of Servicek</Link>
-          </li>
-          
-        </nav>
-      </div>
-    </div>
-  </div>
-  <div class="bg-gray-100">
-    <div class="container mx-auto py-4 px-5 flex flex-wrap flex-col sm:flex-row">
-      <p class="text-black  font-bold text-md text-center sm:text-left ">Copyright 2024 ChefKart Hospitality Pvt Ltd.
-       
-      </p>
-      <span class="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start">
-        <Link to="https://www.facebook.com/thechefkart" class="text-orange-500">
-          <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
-            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-          </svg>
-        </Link>
-        <Link to="https://twitter.com/x/migrate?tok=7b2265223a222f746865636865666b617274222c2274223a313733313932313339347d3aa8556f7b3639d4e784c9c276fb8842" class="ml-3 text-orange-500">
-          <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
-            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-          </svg>
-        </Link>
-        <Link to="https://www.instagram.com/thechefkart/" class="ml-3 text-orange-500">
-          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
-            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
-          </svg>
-        </Link>
-        <Link to="https://www.linkedin.com/company/42762980/" class="ml-3 text-orange-500">
-          <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-5 h-5" viewBox="0 0 24 24">
-            <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
-            <circle cx="4" cy="4" r="2" stroke="none"></circle>
-          </svg>
-        </Link>
-      </span>
-    </div>
-  </div>
-</footer>
-      
-    </div>
-  )
-}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <h4 className="font-semibold mb-2 text-red-600">Products:</h4>
+              <p className="text-sm text-gray-600">
+                Avocado | Strawberry | Pomegranate | Beetroot | Ash guard |
+                Bottle guard | Lady finger | Potatoes | Lemon | Dabbin |
+                Fenugreek seeds | Blueberry | Pizza | Dragon fruit | Madricorn |
+                Lettuce
+              </p>
+            </div>
 
-export default Footer
+            <div>
+              <h4 className="font-semibold mb-2 text-red-600">Brands:</h4>
+              <p className="text-sm text-gray-600">
+                Yukui | My Muse | Ambrosia Alta | Too Varma | Layzi | Fique
+                Olive Oil | Nandan Villa | Awai | Mother Dairy New Me | Fortune
+                Oil | Superyou | Dacre Condoms | Ferris and Pixels
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-2 text-red-600">Categories:</h4>
+              <p className="text-sm text-gray-600">
+                Grocery | Capsules | Chips | Cork | Hookah Brewer | Plain shop
+                near me | Eggs price | Cheese slice | Fresh fruits | Fresh
+                vegetables | Refined oil | Butter price | Paneer price
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Categories Section */}
+      <div className="px-6 py-8">
+        <div className="max-w-6xl mx-auto">
+          <h3 className="text-lg font-bold mb-6 text-red-700">Categories</h3>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Fruits & Vegetables
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Atta, Rice, Oil & Dal
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Masala & Dry Fruits
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Sweet Cravings
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Frozen Food & Ice Cream
+              </h4>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Baby Food
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Dairy, Bread & Eggs
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Cold Drinks & Juices
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Munchies
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Meats, Fish & Eggs
+              </h4>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Breakfast & Sauces
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Tea, Coffee & More
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Biscuits
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Makeup & Beauty
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Bath & Body
+              </h4>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Cleaning Essentials
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Home Needs
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Pharmaceuticals & Accessories
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Hygiene & Grooming
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Health & Baby Care
+              </h4>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Humayama Brands
+              </h4>
+              <h4 className="font-semibold mb-2 text-sm text-red-600">
+                Paar Corner
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer Bottom */}
+      <div className="bg-gray-100 py-8">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div className="flex items-center">
+              <span className="text-2xl font-bold text-red-600 tracking-tight">
+                minutos
+              </span>
+              <span className="ml-4 text-sm text-gray-600">
+                © Minutos Marketplace Private Limited
+              </span>
+            </div>
+
+            <div className="flex flex-wrap gap-4">
+              <Link to="/" className="text-sm text-gray-600 hover:text-red-600">
+                Home
+              </Link>
+              <Link
+                to="/delivery-areas"
+                className="text-sm text-gray-600 hover:text-red-600"
+              >
+                Delivery Areas
+              </Link>
+              <Link
+                to="/careers"
+                className="text-sm text-gray-600 hover:text-red-600"
+              >
+                Careers
+              </Link>
+              <Link
+                to="/support"
+                className="text-sm text-gray-600 hover:text-red-600"
+              >
+                Customer Support
+              </Link>
+              <Link
+                to="/press"
+                className="text-sm text-gray-600 hover:text-red-600"
+              >
+                Press
+              </Link>
+              <Link
+                to="/blog"
+                className="text-sm text-gray-600 hover:text-red-600"
+              >
+                Blog
+              </Link>
+            </div>
+          </div>
+
+          <div className="mt-6 pt-6 border-t border-gray-200">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  to="/privacy"
+                  className="text-sm text-gray-600 hover:text-red-600"
+                >
+                  Privacy Policy
+                </Link>
+                <Link
+                  to="/terms"
+                  className="text-sm text-gray-600 hover:text-red-600"
+                >
+                  Terms of Use
+                </Link>
+                <Link
+                  to="/disclosure"
+                  className="text-sm text-gray-600 hover:text-red-600"
+                >
+                  Responsible Disclosure Policy
+                </Link>
+                <Link
+                  to="/sell"
+                  className="text-sm text-gray-600 hover:text-red-600"
+                >
+                  Sell on Minutos
+                </Link>
+                <Link
+                  to="/deliver"
+                  className="text-sm text-gray-600 hover:text-red-600"
+                >
+                  Deliver with Minutos
+                </Link>
+                <Link
+                  to="/franchise"
+                  className="text-sm text-gray-600 hover:text-red-600"
+                >
+                  Franchise with Minutos
+                </Link>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <h4 className="font-bold text-sm text-red-700">Download App</h4>
+                <div className="flex gap-2">
+                  <button className="h-10 w-32 bg-black text-white rounded flex items-center justify-center text-xs hover:bg-red-600 transition-colors">
+                    GET IT ON
+                    <br />
+                    GOOGLE PLAY
+                  </button>
+                  <button className="h-10 w-32 bg-black text-white rounded flex items-center justify-center text-xs hover:bg-red-600 transition-colors">
+                    DOWNLOAD ON THE
+                    <br />
+                    APP STORE
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 flex justify-center md:justify-start">
+            <div className="flex gap-4">
+              <div className="cursor-pointer w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition-colors">
+                <FaFacebookF size={14} />
+              </div>
+              <div className="cursor-pointer w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition-colors">
+                <FaTwitter size={14} />
+              </div>
+              <div className="cursor-pointer w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition-colors">
+                <FaInstagram size={14} />
+              </div>
+              <div className="cursor-pointer w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition-colors">
+                <FaLinkedinIn size={14} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
