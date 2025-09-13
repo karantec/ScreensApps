@@ -1,23 +1,29 @@
 import { Route, Routes } from "react-router-dom";
+import AgingFoodProductsForm from "./Components/RegistrationForm";
+import OrderConfirmationScreen from "./Components/Order";
+import BusinessSearchScreen from "./Components/Search";
+import BusinessProfileScreen from "./Components/BusinessProfileScreen";
+import WRIOWholesaleScreen from "./Components/RetailScreen";
+import ViewOrderDetails from "./Components/OrderDetails";
+import ViewLogsScreen from "./Components/Logs";
+import VendorSelectionScreen from "./Components/Vendor";
+import SearchBusinessScreen from "./Components/SearchBusiness";
 
-import Header from "./Components/Header/Navbar";
-import Footer from "./Components/Footer/Footer";
-import Home from "./Components/pages/Home";
-
-import SettingsPage from "./Components/shared/Profile";
-import FruitsVegetablesComponent from "./Components/shared/SubCategory";
 const App = () => {
   return (
     <div>
-      <Header />
-
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<SettingsPage />} />
-        <Route path="/subCategory" element={<FruitsVegetablesComponent />} />]
+        <Route path="/" element={<AgingFoodProductsForm />} />
+        <Route path="/order" element={<OrderConfirmationScreen />} />
+        <Route path="/search" element={<BusinessSearchScreen />} />
+        <Route path="/profile" element={<BusinessProfileScreen />} />
+        <Route path="/retail" element={<WRIOWholesaleScreen />} />
+        <Route path="/order" element={<OrderConfirmationScreen />} />
+        <Route path="/order-details" element={<ViewOrderDetails />} />
+        <Route path="/logs" element={<ViewLogsScreen />} />
+        <Route path="/vendor" element={<VendorSelectionScreen />} />
+        <Route path="/business-search" element={<SearchBusinessScreen />} />
       </Routes>
-
-      <Footer />
     </div>
   );
 };
