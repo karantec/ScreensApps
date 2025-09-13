@@ -14,14 +14,14 @@ const App = () => {
     <div>
       <Routes>
         <Route path="/orderForm" element={<AgingFoodProductsForm />} />
-        <Route path="/order" element={<OrderConfirmationScreen />} />
+        <Route path="/confirm" element={<OrderConfirmationScreen />} />
         <Route path="/search" element={<BusinessSearchScreen />} />
         <Route path="/profile" element={<BusinessProfileScreen />} />
         {/* <Route path="/searching" element={<WRIOWholesaleScreen />} /> */}
         <Route path="/ApplicationHome" element={<WRIOWholesaleScreen />} />
         <Route path="/order" element={<OrderConfirmationScreen />} />
         <Route path="/order-details" element={<ViewOrderDetails />} />
-        <Route path="/logs" element={<ViewLogsScreen />} />
+        <Route path="/orders" element={<ViewLogsScreen />} />
         <Route path="/selectProduct" element={<VendorSelectionScreen />} />
         <Route path="/business-search" element={<SearchBusinessScreen />} />
       </Routes>

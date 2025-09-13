@@ -137,20 +137,20 @@ export default function ViewLogsScreen() {
                           <span className="text-sm lg:text-xl font-bold text-gray-900">
                             {entry.type}
                           </span>
-                          <span
-                            className={`text-xs lg:text-sm px-2 py-1 rounded-full font-medium ${getStatusColor(
-                              entry.status
-                            )}`}
-                          >
-                            {entry.status}
-                          </span>
                         </div>
                         <p className="text-xs lg:text-base font-medium text-gray-600 mb-1 lg:mb-2">
                           {entry.id}
                         </p>
-                        <p className="text-xs lg:text-sm text-gray-500">
+                        <p className="text-xs lg:text-sm text-gray-600">
                           {entry.date}
                         </p>
+                        <span
+                          className={`text-xs lg:text-sm px-2 py-1 rounded-full font-medium ${getStatusColor(
+                            entry.status
+                          )}`}
+                        >
+                          {entry.status}
+                        </span>
                       </div>
 
                       <div className="mt-2 lg:mt-0 lg:text-right lg:ml-6">

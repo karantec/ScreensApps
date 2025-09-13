@@ -100,7 +100,7 @@ export default function ViewOrderDetails() {
           {/* Bobby (बॉबी) */}
           <div className="px-4 py-4 flex justify-between items-center">
             <span className="text-sm text-gray-700">Bobby (बॉबी)</span>
-            <span className="text-sm font-medium text-gray-900">2 ✱</span>
+            <span className="text-sm font-medium text-gray-900">2 ✱ Price</span>
           </div>
 
           {/* Subtotal */}

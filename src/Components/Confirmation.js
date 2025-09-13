@@ -12,7 +12,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 
-export default function OrderConfirmationScreen() {
+export default function OrderConfirmationScreens() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
