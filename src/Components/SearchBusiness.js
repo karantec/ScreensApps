@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { ArrowLeft, Search, Image, Plus } from "lucide-react";
+import {
+  ArrowLeft,
+  Search,
+  Image,
+  Plus,
+  Home,
+  ShoppingBag,
+  User,
+  Settings,
+} from "lucide-react";
 
 const BusinessSearchScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,39 +26,31 @@ const BusinessSearchScreen = () => {
       id: 2,
       name: "National Restaurant",
       type: "Food & Dining",
-      icon: (
-        <div className="w-8 h-8 bg-white rounded flex items-center justify-center text-orange-600 font-bold text-sm">
-          NR
-        </div>
-      ),
-      bgColor: "bg-orange-500",
-      iconBg: "bg-orange-500",
+      icon: <div className="w-8 h-8 text-green-600">NR</div>,
+      bgColor: "bg-green-200",
+      iconBg: "bg-green-100",
     },
     {
       id: 3,
       name: "B2C Solutions",
       type: "Business Services",
-      icon: (
-        <div className="w-8 h-8 bg-white rounded flex items-center justify-center text-green-600 font-bold text-sm">
-          B2C
-        </div>
-      ),
-      bgColor: "bg-green-600",
-      iconBg: "bg-green-600",
+      icon: <div className="w-8 h-8 text-green-600">B2C</div>,
+      bgColor: "bg-green-200",
+      iconBg: "bg-green-100",
     },
     {
       id: 4,
       name: "Add Business",
       type: "Create New",
       icon: <Plus className="w-8 h-8 text-green-600" />,
-      bgColor: "bg-green-100",
+      bgColor: "bg-green-200",
       iconBg: "bg-green-100",
       isAddButton: true,
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100">
+    <div className="min-h-screen bg-gradient-to-br bg-white flex flex-col">
       {/* Header */}
       <div className="p-4">
         <div className="flex items-center space-x-4 mb-8">
@@ -74,21 +75,19 @@ const BusinessSearchScreen = () => {
               placeholder="Search Business Name"
               className="w-full pl-10 pr-4 py-3 bg-white rounded-lg border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent placeholder-gray-400"
             />
-            <button className="absolute inset-y-0 right-0 pr-3 flex items-center">
-              <div className="bg-green-500 hover:bg-green-600 text-white px-4 py-1.5 rounded-md text-sm font-medium transition-colors">
-                Search
-              </div>
-            </button>
+            <button className="absolute inset-y-0 right-0 pr-3 flex items-center"></button>
           </div>
         </div>
 
         {/* Recently Used Section */}
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto pb-24">
+          {" "}
+          {/* padding bottom for footer space */}
           <h2 className="text-lg font-medium text-green-800 mb-6">
             Recently Used
           </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {/* ✅ 2 per row on mobile, 4 per row on md+ */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {recentlyUsedBusinesses.map((business) => (
               <div
                 key={business.id}
@@ -114,30 +113,10 @@ const BusinessSearchScreen = () => {
 
                   {/* Business Info */}
                   <div className="text-center">
-                    <h3
-                      className={`font-medium text-sm mb-1 ${
-                        business.isAddButton
-                          ? "text-green-700"
-                          : business.id === 2
-                          ? "text-white"
-                          : business.id === 3
-                          ? "text-white"
-                          : "text-green-800"
-                      }`}
-                    >
+                    <h3 className="font-medium text-black text-sm mb-1">
                       {business.name}
                     </h3>
-                    <p
-                      className={`text-xs ${
-                        business.isAddButton
-                          ? "text-green-600"
-                          : business.id === 2
-                          ? "text-orange-100"
-                          : business.id === 3
-                          ? "text-green-100"
-                          : "text-green-600"
-                      }`}
-                    >
+                    <p className="font-medium text-black text-sm mb-1">
                       {business.type}
                     </p>
                   </div>
@@ -150,7 +129,7 @@ const BusinessSearchScreen = () => {
 
       {/* Empty State for Search Results */}
       {searchQuery && (
-        <div className="max-w-4xl mx-auto px-4 mt-8">
+        <div className="max-w-4xl mx-auto px-4 mt-8 pb-24">
           <div className="bg-white rounded-lg p-8 text-center shadow-sm">
             <div className="text-gray-400 mb-4">
               <Search className="w-12 h-12 mx-auto" />
@@ -164,6 +143,28 @@ const BusinessSearchScreen = () => {
           </div>
         </div>
       )}
+
+      {/* ✅ Footer Menu */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white shadow-md border-t border-gray-200">
+        <div className="grid grid-cols-4 text-center text-sm">
+          <button className="flex flex-col items-center py-3 text-green-600">
+            <Home className="w-5 h-5 mb-1" />
+            Home
+          </button>
+          <button className="flex flex-col items-center py-3 text-gray-600 hover:text-green-600">
+            <ShoppingBag className="w-5 h-5 mb-1" />
+            My Orders
+          </button>
+          <button className="flex flex-col items-center py-3 text-gray-600 hover:text-green-600">
+            <User className="w-5 h-5 mb-1" />
+            My Account
+          </button>
+          <button className="flex flex-col items-center py-3 text-gray-600 hover:text-green-600">
+            <Settings className="w-5 h-5 mb-1" />
+            Settings
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Menu,
   ShoppingCart,
@@ -14,9 +14,57 @@ import {
   Heart,
   Plus,
   ArrowRight,
+  Image, // ✅ FIXED import
 } from "lucide-react";
 
 export default function WRIOWholesaleScreen() {
+  // ✅ Added state for mobile input
+  const [mobile, setMobile] = useState("");
+
+  const recentlyUsedBusinesses = [
+    {
+      id: 1,
+      name: "Jet Image Systems",
+      type: "Digital Service",
+      icon: <Image className="w-8 h-8 text-green-600" />,
+      bgColor: "bg-green-200",
+      iconBg: "bg-green-100",
+    },
+    {
+      id: 2,
+      name: "National Restaurant",
+      type: "Food & Dining",
+      icon: (
+        <div className="w-8 h-8 text-green-600 font-bold flex items-center justify-center">
+          NR
+        </div>
+      ),
+      bgColor: "bg-green-200",
+      iconBg: "bg-green-100",
+    },
+    {
+      id: 3,
+      name: "B2C Solutions",
+      type: "Business Services",
+      icon: (
+        <div className="w-8 h-8 text-green-600 font-bold flex items-center justify-center">
+          B2C
+        </div>
+      ),
+      bgColor: "bg-green-200",
+      iconBg: "bg-green-100",
+    },
+    {
+      id: 4,
+      name: "Add Business",
+      type: "Create New",
+      icon: <Plus className="w-8 h-8 text-green-600" />,
+      bgColor: "bg-green-200",
+      iconBg: "bg-green-100",
+      isAddButton: true,
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
@@ -25,7 +73,6 @@ export default function WRIOWholesaleScreen() {
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-20 h-20 border-2 border-white rounded-full"></div>
           <div className="absolute top-20 right-16 w-16 h-16 border-2 border-white rounded-full"></div>
-          <div className="absolute bottom-10 left-20 w-12 h-12 border-2 border-white rounded-full"></div>
         </div>
 
         <div className="relative">
@@ -33,21 +80,15 @@ export default function WRIOWholesaleScreen() {
             <div className="p-2 bg-white/20 rounded-xl hover:bg-white/30 transition-colors cursor-pointer">
               <Menu className="w-6 h-6" />
             </div>
-            <div className="p-2 bg-white/20 rounded-xl hover:bg-white/30 transition-colors cursor-pointer">
-              <Heart className="w-6 h-6" />
-            </div>
           </div>
 
           <div className="text-center">
             {/* Enhanced Logo */}
-            <div className="relative mb-6">
-              <div className="w-24 h-24 bg-white rounded-full mx-auto shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
+            <div className="relative ">
+              <div className="w-24 h-16 bg-white rounded-full mx-auto shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
                 <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center">
                   <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full shadow-lg"></div>
                 </div>
-              </div>
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg">
-                <Star className="w-4 h-4 text-yellow-600 fill-current" />
               </div>
             </div>
 
@@ -69,7 +110,36 @@ export default function WRIOWholesaleScreen() {
 
       {/* Main Content */}
       <div className="px-6 py-8 pb-24">
-        {/* Featured Products Header */}
+        {/* Sign In Card */}
+        <div className="max-w-md mx-auto bg-white shadow-xl rounded-2xl p-8 mt-8 mb-10">
+          <div className="text-center mb-6">
+            <div className="w-20 h-20 bg-green-100 rounded-full mx-auto flex items-center justify-center mb-4">
+              <Image className="w-10 h-10 text-green-600" />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-800">Sign In</h1>
+          </div>
+
+          {/* Mobile Input */}
+
+          {/* Google Sign In */}
+          <button className="w-full flex items-center justify-center space-x-2 border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition-colors mb-4">
+            <img
+              src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+              alt="Google"
+              className="w-5 h-5"
+            />
+            <span className="text-gray-700 font-medium">
+              Sign in with Google
+            </span>
+          </button>
+
+          {/* Admin login */}
+          <p className="text-center text-sm text-red-500 cursor-pointer hover:underline">
+            Administrator login
+          </p>
+        </div>
+
+        {/* Featured Products Section */}
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-800 mb-2">
             Featured Products
@@ -80,7 +150,7 @@ export default function WRIOWholesaleScreen() {
         </div>
 
         {/* Action Cards Row */}
-        <div className="grid grid-cols-3 gap-4 mb-10">
+        <div className="grid grid-cols-2 gap-4 mb-10">
           {/* Product Gallery */}
           <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow group">
             <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -117,107 +187,7 @@ export default function WRIOWholesaleScreen() {
           </div>
         </div>
 
-        {/* Product Showcase */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {/* Agroj Food Products */}
-          <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
-            <div className="flex items-start justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-100 to-orange-200 rounded-xl flex items-center justify-center">
-                <Award className="w-6 h-6 text-orange-600" />
-              </div>
-              <div className="flex space-x-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-3 h-3 fill-current text-yellow-400"
-                  />
-                ))}
-              </div>
-            </div>
-            <h3 className="font-bold text-gray-800 text-lg mb-2">
-              Agroj Food Products
-            </h3>
-            <p className="text-sm text-gray-600 mb-4 leading-relaxed">
-              Premium quality food products for wholesale distribution. Trusted
-              by 1000+ retailers.
-            </p>
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <span className="text-2xl font-bold text-gray-800">₹299</span>
-                <span className="text-sm text-gray-500 line-through ml-2">
-                  ₹399
-                </span>
-              </div>
-              <div className="bg-green-100 text-green-600 px-2 py-1 rounded-lg text-xs font-semibold">
-                25% OFF
-              </div>
-            </div>
-            <button className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 rounded-xl hover:from-green-600 hover:to-green-700 transition-all transform group-hover:scale-105 flex items-center justify-center space-x-2">
-              <ShoppingCart className="w-4 h-4" />
-              <span>Order Now</span>
-            </button>
-          </div>
-
-          {/* National Chilkti */}
-          <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group">
-            <div className="flex items-start justify-between mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-red-100 to-red-200 rounded-xl flex items-center justify-center">
-                <Zap className="w-6 h-6 text-red-600" />
-              </div>
-              <div className="flex space-x-1">
-                {[...Array(4)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-3 h-3 fill-current text-yellow-400"
-                  />
-                ))}
-                <Star className="w-3 h-3 text-gray-300" />
-              </div>
-            </div>
-            <h3 className="font-bold text-gray-800 text-lg mb-2">
-              National Chilkti
-            </h3>
-            <p className="text-sm text-gray-600 mb-4 leading-relaxed">
-              Delicious traditional snacks perfect for your retail stores. High
-              demand product.
-            </p>
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <span className="text-2xl font-bold text-gray-800">₹159</span>
-                <span className="text-sm text-gray-500 line-through ml-2">
-                  ₹199
-                </span>
-              </div>
-              <div className="bg-red-100 text-red-600 px-2 py-1 rounded-lg text-xs font-semibold">
-                HOT DEAL
-              </div>
-            </div>
-            <button className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold py-3 rounded-xl hover:from-red-600 hover:to-red-700 transition-all transform group-hover:scale-105 flex items-center justify-center space-x-2">
-              <ShoppingCart className="w-4 h-4" />
-              <span>Order Now</span>
-            </button>
-          </div>
-
-          {/* Discover More */}
-          <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 group border border-purple-100">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl flex items-center justify-center mb-4">
-              <TrendingUp className="w-6 h-6 text-purple-600" />
-            </div>
-            <h3 className="font-bold text-gray-800 text-lg mb-2">
-              Discover More
-            </h3>
-            <p className="text-sm text-gray-600 mb-6 leading-relaxed">
-              Explore our expanding catalog of 500+ wholesale products across
-              categories.
-            </p>
-            <button className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold py-3 rounded-xl hover:from-purple-600 hover:to-indigo-600 transition-all transform group-hover:scale-105 flex items-center justify-center space-x-2">
-              <span>Browse All</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* Enhanced Stats Section */}
+        {/* Stats Section */}
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
           <div className="grid grid-cols-3 gap-6">
             <div className="text-center group">
@@ -254,26 +224,39 @@ export default function WRIOWholesaleScreen() {
         </div>
       </div>
 
-      {/* Enhanced Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-gray-200 px-6 py-4 shadow-2xl">
-        <div className="grid grid-cols-3 gap-6">
+      {/* ✅ Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-gray-200 px-6 py-3 shadow-2xl">
+        <div className="grid grid-cols-4 gap-6">
+          {/* Search */}
           <div className="text-center group cursor-pointer">
-            <div className="w-12 h-12 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl mx-auto mb-2 flex items-center justify-center group-hover:from-green-100 group-hover:to-green-200 transition-all">
-              <Search className="w-6 h-6 text-gray-500 group-hover:text-green-600 transition-colors" />
+            <div className="w-10 h-10 bg-gradient-to-br from-green-100 to-green-200 rounded-xl mx-auto mb-1 flex items-center justify-center shadow-md group-hover:from-green-200 group-hover:to-green-300 transition-all">
+              <Search className="w-5 h-5 text-green-600" />
             </div>
-            <p className="text-xs text-gray-600 font-medium">SEARCH</p>
+            <p className="text-xs text-green-600 font-bold">Search</p>
           </div>
+
+          {/* My Orders */}
           <div className="text-center group cursor-pointer">
-            <div className="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl mx-auto mb-2 flex items-center justify-center shadow-lg">
-              <Grid3X3 className="w-6 h-6 text-green-600" />
+            <div className="w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl mx-auto mb-1 flex items-center justify-center group-hover:from-blue-100 group-hover:to-blue-200 transition-all">
+              <ShoppingCart className="w-5 h-5 text-gray-500 group-hover:text-blue-600 transition-colors" />
             </div>
-            <p className="text-xs text-green-600 font-bold">ACTIVITIES</p>
+            <p className="text-xs text-gray-600 font-bold">My Orders</p>
           </div>
+
+          {/* My Account */}
           <div className="text-center group cursor-pointer">
-            <div className="w-12 h-12 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl mx-auto mb-2 flex items-center justify-center group-hover:from-blue-100 group-hover:to-blue-200 transition-all">
-              <Users className="w-6 h-6 text-gray-500 group-hover:text-blue-600 transition-colors" />
+            <div className="w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl mx-auto mb-1 flex items-center justify-center group-hover:from-purple-100 group-hover:to-purple-200 transition-all">
+              <Users className="w-5 h-5 text-gray-500 group-hover:text-purple-600 transition-colors" />
             </div>
-            <p className="text-xs text-gray-600 font-medium">PROFILES</p>
+            <p className="text-xs text-gray-600 font-bold">My Account</p>
+          </div>
+
+          {/* Settings */}
+          <div className="text-center group cursor-pointer">
+            <div className="w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl mx-auto mb-1 flex items-center justify-center group-hover:from-red-100 group-hover:to-red-200 transition-all">
+              <Info className="w-5 h-5 text-gray-500 group-hover:text-red-600 transition-colors" />
+            </div>
+            <p className="text-xs text-gray-600 font-bold">Settings</p>
           </div>
         </div>
       </div>

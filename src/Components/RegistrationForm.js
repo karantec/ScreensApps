@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { User } from "lucide-react";
 
 export default function AgingFoodProductsForm() {
   const [formData, setFormData] = useState({
@@ -9,6 +8,7 @@ export default function AgingFoodProductsForm() {
     mobileNumber: "",
     gstin: "",
     routeName: "",
+    profile: "",
     termsAccepted: false,
   });
 
@@ -36,11 +36,28 @@ export default function AgingFoodProductsForm() {
           </div>
 
           <div className="p-6 lg:p-8">
-            {/* Profile Icon */}
-            <div className="flex justify-center mb-4 lg:mb-6">
-              <div className="w-14 h-14 lg:w-16 lg:h-16 bg-green-500 rounded-full flex items-center justify-center">
-                <User className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
-              </div>
+            {/* Profile Dropdown */}
+            <div className="mb-4 lg:mb-6">
+              <label
+                htmlFor="profile"
+                className="block text-sm lg:text-base font-medium text-gray-700 mb-2 text-center"
+              >
+                Select Profile
+              </label>
+              <select
+                id="profile"
+                name="profile"
+                value={formData.profile}
+                onChange={handleInputChange}
+                className="w-full p-3 lg:p-4 text-sm lg:text-base text-gray-600 border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-green-400 focus:border-green-400"
+                style={{ backgroundColor: "#fafafa" }}
+              >
+                <option value="">-- Choose Profile --</option>
+                <option value="retailer">Retailer</option>
+                <option value="distributor">Distributor</option>
+                <option value="wholesaler">Wholesaler</option>
+                <option value="manufacturer">Manufacturer</option>
+              </select>
             </div>
 
             <p className="text-center text-gray-600 text-sm lg:text-base mb-6 lg:mb-8">
