@@ -8,6 +8,9 @@ import ViewOrderDetails from "./Components/OrderDetails";
 import ViewLogsScreen from "./Components/Logs";
 import VendorSelectionScreen from "./Components/Vendor";
 import SearchBusinessScreen from "./Components/SearchBusiness";
+import { Settings } from "lucide-react";
+import BusinessSetting from "./Components/Settings";
+import UserProfileLayout from "./Components/Profile";
 
 const App = () => {
   return (
@@ -24,6 +27,10 @@ const App = () => {
         <Route path="/orders" element={<ViewLogsScreen />} />
         <Route path="/selectProduct" element={<VendorSelectionScreen />} />
         <Route path="/business-search" element={<SearchBusinessScreen />} />
+
+        <Route path="/setting" element={<BusinessSetting />} />
+        <Route path="/business-search" element={<SearchBusinessScreen />} />
+        <Route path="/profiles" element={<UserProfileLayout />} />
       </Routes>
     </div>
   );
